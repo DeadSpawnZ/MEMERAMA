@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content.Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+	<title>Memerama</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<style>
+		header{
+			width: 100%;
+			height: 300px;
+			background-color: #023A65;
+			z-index: 2;
+		}
+
+		#contenedor{
+			width: 100%;
+			position: fixed;
+			background-color: #055FA4;
+			z-index: 1;
+		}
+
+		@media (min-device-width: 1px) and (max-device-width: 479px){
+			body{
+				margin: 0px;
+			}
+
+			header{
+				width: 100%;
+				height: 100px;
+				background-color: #023A65;
+				color: white;
+				position: fixed;
+				z-index: 2;
+			}
+
+			.icono{
+				font-size: 20px;
+				margin: 40px 30px;
+				display: inline-block;
+				z-index: 3;
+			}
+
+			#titulo{
+				width: 100%;
+				text-align: center;
+				position: absolute;
+				top: 35%;
+				font-size: 25px;
+			}
+
+			#contenedor{
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				position: absolute;
+				padding-top: 130px;
+				background-color: #055FA4;
+				z-index: -1;
+			}
+
+			.carta44{
+				width: 70px;
+				height: 70px;
+				background-image: url("Imagenes/reves.jpg");
+				margin: 5px;
+				border-radius: 2px;
+				display: inline-block;
+				background-size: contain;
+				transition: transform 2s, background-image 2.6s;
+			}
+
+			.carta444{
+				transform: rotateY(180deg);
+				background-image: url("Imagenes/Zed.png");
+				background-size: contain;
+			}
+
+			.fila{
+				display: block;
+			}
+		}
+	</style>
+</head>
+<body>
+	
+	<header>
+		<div class="icono"><i class="fa fa-navicon"></i></div>
+		<div id="titulo">MEMERAMA</div>
+	</header>
+	<div id="contenedor">
+		<!--EL CONTENEDOR CHIDO-->
+		<div class="fila">
+			<div id="11" class="carta44" onclick="gira(this)"></div>
+			<div class="carta44"></div>
+			<div class="carta44"></div>
+			<div class="carta44"></div>
+		</div>
+		<div class="fila">
+			<div class="carta44"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var contenedor = document.getElementById("contenedor");
+		var titulo = document.getElementById("titulo");
+
+		/*window.onload = function(){
+			contenedor.innerHTML = "<p>Ingresa tu nombre</p>"+
+				"<input id='nombre' type='text' placeholder='Tu nombre aquí' required/>"+
+				"<button onclick='aceptar()'>Aceptar</button>";
+		}*/
+
+		function aceptar(){
+			var nombre = document.getElementById("nombre").value;
+			if(nombre != ""){
+				titulo.innerHTML = document.getElementById("nombre").value;
+				contenedor.innerHTML = "<p>Selecciona el tema</p>"+
+					"<select id='tema'>"+
+					  	"<option value='Ben10'>Ben 10</option>"+
+					  	"<option value='Pokoio'>Pokoio</option>"+
+					  	"<option value='LOL'>LOL</option>"+
+					"</select>"+
+					"<p>Selecciona el tamaño</p>"+
+					"<select id='tam'>"+
+					  "<option value='4x4'>4x4</option>"+
+					  "<option value='4x5'>4x5</option>"+
+					"</select>"+
+					"<button onclick='go()'>GO</button>";
+			}
+		}
+
+		function GO(){
+			var tema = document.getElementById("tema").value;
+			var tam = document.getElementById("tam").value;
+			if(tam == "4x4"){
+				//contenedor.innerHTML = 
+			}
+			if(tam == "4x5"){
+
+			}
+		}
+
+		function gira(card){
+			if(card.className == "carta44"){
+				card.className = "carta44 carta444";
+			}else{
+				card.className = "carta44";
+			}
+		}
+		function initMemerama(){
+			//var
+		}
+	</script>
+</body>
+</html>
