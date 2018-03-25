@@ -39,7 +39,8 @@
 				font-size: 20px;
 				margin: 40px 30px;
 				display: inline-block;
-				z-index: 3;
+				position: absolute;
+				z-index: 10;
 			}
 
 			#titulo{
@@ -48,6 +49,7 @@
 				position: absolute;
 				top: 35%;
 				font-size: 25px;
+				z-index: 3;
 			}
 
 			#contenedor{
@@ -81,15 +83,67 @@
 			.fila{
 				display: block;
 			}
+
+			.menu{
+				width: 1px;
+				height: 100%;
+				position: absolute;
+				top: 100px;
+				background-color: red;
+				color: white;
+				transition: width 2s, opacity 1s;
+				opacity: 0;
+			}
+
+			nav ul{
+				margin: 0px;
+				padding: 10px 20px;
+			}
+
+			nav li{
+				width: 100%;
+				list-style: none;
+				padding: 10px 0px; 
+			}
+
+			nav i{
+				margin-right: 5px;
+			}
+
+			hr{
+				margin: 5px 10px; 
+			}
+
+			.despliega{
+				width: 55%;
+				height: 100%;
+				position: absolute;
+				top: 100px;
+				background-color: red;
+				color: white;
+				display: block;
+				transition: width 2s, opacity 1s;
+				opacity: 1;
+			}
 		}
 	</style>
 </head>
 <body>
 	
 	<header>
-		<div class="icono"><i class="fa fa-navicon"></i></div>
+		<div class="icono" onclick="show_menu()"><i class="fa fa-navicon"></i></div>
 		<div id="titulo">MEMERAMA</div>
 	</header>
+	<nav id="menu_chido" class="menu">
+		<ul>
+			<li><i class="fa fa-home"></i>Inicio</li>
+			<li><i class="fa fa-suitcase"></i>Terminar Juego</li>
+			<li><i class="fa fa-puzzle-piece"></i>Solución</li>
+			<li><i class="fa fa-trophy"></i>Ver Puntuaciones</li>
+			<li><i class="	fa fa-times"></i>Salir</li>
+		</ul>
+		<hr/>
+	</nav>
 	<div id="contenedor">
 		<!--EL CONTENEDOR CHIDO-->
 	</div>
@@ -290,6 +344,17 @@
 					contador_s++;
 				}
 			,1000);
+		}
+
+		var out = false;
+		function show_menu(){
+			if(!out){
+				document.getElementById("menu_chido").className ="despliega";
+				out = true;
+			}else{
+				document.getElementById("menu_chido").className ="menu";
+				out = false;
+			}
 		}
 	</script>
 </body>
