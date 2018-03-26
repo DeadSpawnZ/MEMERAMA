@@ -1,0 +1,118 @@
+header{
+	width: 100%;
+	height: 300px;
+	background-color: #023A65;
+	z-index: 2;
+}
+
+#contenedor{
+	width: 100%;
+	position: fixed;
+	background-color: #055FA4;
+	z-index: 1;
+}
+
+@media (min-device-width: 1px) and (max-device-width: 479px){
+	body{
+		margin: 0px;
+	}
+
+	header{
+		width: 100%;
+		height: 100px;
+		background-color: #023A65;
+		color: white;
+		position: fixed;
+		z-index: 2;
+	}
+
+	.icono{
+		font-size: 20px;
+		margin: 40px 30px;
+		display: inline-block;
+		position: absolute;
+		z-index: 3;
+	}
+
+	#titulo{
+		width: 100%;
+		text-align: center;
+		position: absolute;
+		top: 35%;
+		font-size: 25px;
+		z-index: 2;
+	}
+
+	#contenedor{
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+		position: absolute;
+		padding-top: 130px;
+		background-color: #055FA4;
+		z-index: -1;
+	}
+
+	.carta44{
+		width: 70px;
+		height: 70px;
+		background-image: url("Imagenes/reves.jpg");
+		margin: 5px;
+		border-radius: 2px;
+		display: inline-block;
+		background-size: contain;
+		transition: transform 2s, background-image 2.6s;
+	}
+
+	.carta444{
+		transform: rotateY(180deg);
+		background-size: contain;
+	}
+
+	.fila{
+		display: block;
+	}
+
+	.menu{
+		width: 1px;
+		height: 100%;
+		position: absolute;
+		top: 100px;
+		background-color: red;
+		color: white;
+		transition: width 2s, opacity 1s, z-index 2s;
+		opacity: 0;
+		z-index: -2;
+	}
+
+	nav ul{
+		margin: 0px;
+		padding: 10px 20px;
+	}
+
+	nav li{
+		width: 100%;
+		list-style: none;
+		padding: 10px 0px; 
+	}
+
+	nav i{
+		margin-right: 5px;
+	}
+
+	hr{
+		margin: 5px 10px; 
+	}
+
+	#ganador{
+		width: 70%;
+		height: 250px;
+		background-color: green;
+		margin: 0 auto;
+		color: black;
+		position: absolute;
+		top: 150px;
+		left: 15%;
+	}
+}
