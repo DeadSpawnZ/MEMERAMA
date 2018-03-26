@@ -21,9 +21,9 @@ function aceptar(){
 		titulo.innerHTML = document.getElementById("nombre").value;
 		contenedor.innerHTML = "<p>Selecciona el tema</p>"+
 		"<select id='tema'>"+
-		  	"<option value='Ben10'>Ben 10</option>"+
-		  	"<option value='Pokoio'>Pokoio</option>"+
-		  	"<option value='LOL'>LOL</option>"+
+		  	"<option value='Pokemon'>Pokemon</option>"+
+		  	"<option value='Redes'>Redes</option>"+
+		  	"<option value='League'>LOL</option>"+
 		"</select>"+
 		"<p>Selecciona el tamaño</p>"+
 		"<select id='tam'>"+
@@ -54,10 +54,10 @@ function gira(card){
 	var col = card.id-(fil*4);  
 	if(card.className == "carta44"){
 		card.className = "carta44 carta444";
-		card.style.backgroundImage = "url(Imagenes/"+matrix[col][fil]+".png)";
+		card.style.backgroundImage = "url(Imagenes/"+tema+"/"+matrix[col][fil]+".png)";
 	}else{
 		card.className = "carta44";
-		card.style.backgroundImage = "url(Imagenes/reves.jpg)";
+		card.style.backgroundImage = "url(Imagenes/"+tema+"/reves.png)";
 	}
 }
 
@@ -166,6 +166,7 @@ function show_cards(tam){
 			var carta = document.createElement("button");
 			carta.setAttribute("id", cont++);
 			carta.setAttribute("class", "carta44");
+			carta.style.backgroundImage = "url(Imagenes/"+tema+"/reves.png)";
 			carta.setAttribute("onclick", "parea(this);");
 			fila.appendChild(carta);
 		}
@@ -238,9 +239,11 @@ function terminar(){
             var name = results.rows.item(0).nombre;
         }, null);
     });*/
+    show_menu();
 	db.transaction(function(tx){
         tx.executeSql("INSERT INTO USUARIO(nombre,tiempo,movimientos,abandonos) VALUES (?,?,?,?)", [nombre, contador_m+":"+contador_s, movimientos, "1"]);
     });
+    inicio();
 }
 
 function solucion(){
@@ -274,5 +277,6 @@ function ha_ganado(){
 		db.transaction(function(tx){
 	        tx.executeSql("INSERT INTO USUARIO(nombre,tiempo,movimientos,abandonos) VALUES (?,?,?,?)", [nombre, contador_m+":"+contador_s, movimientos, "0"]);
 	    });
+	    iniciado = false; //ESTO NO ESTA EN EL COMMIT v5
 	}
 }
