@@ -3,14 +3,11 @@ var titulo = document.getElementById("titulo");
 var matrix;
 
 window.onload = function(){
-	contenedor.innerHTML = "<p>Ingresa tu nombre</p>"+
-	"<input id='nombre' type='text' placeholder='Tu nombre aquí' required/>"+
-	"<button onclick='aceptar()'>Aceptar</button>";
 
 	//BASE DE DATOS
 	db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
     db.transaction(function(tx){
-        tx.executeSql('CREATE TABLE IF NOT EXISTS USUARIO(nombre TEXT, tiempo TEXT, movimientos INTEGER, abandonos INTEGER)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS USUARIO(nombre TEXT, mins INTEGER, segs INTEGER, movimientos INTEGER, abandonos INTEGER)');
     });
 }
 
@@ -37,6 +34,11 @@ function aceptar(){
 var tema;
 var size;
 function GO(){
+	document.getElementById("li_terminar").style.display="block";
+	document.getElementById("li_solucion").style.display="block";
+	document.getElementById("li_ver").style.display="none";
+	document.getElementById("li_inicio").style.display="none";
+	
 	tema = document.getElementById("tema").value;
 	var tam = document.getElementById("tam").value;
 	if(tam == "4x4"){
@@ -174,8 +176,8 @@ function show_cards(tam){
 	}
 }
 
-var contador_s;
-var contador_m;
+var contador_s=0;
+var contador_m=0;
 function start_cronometro(){
 	//ELEMENTOS CREADOS PARA EL CRONOMETRO
 	var time = document.createElement("div");
@@ -212,38 +214,33 @@ var menu_out = false;
 function show_menu(){
 	var temp = document.getElementById("menu_chido");
 	if(!menu_out){
-		temp.style.width = "55%";
-		temp.style.opacity = "1";
-		temp.style.zIndex = "4";
+		temp.style.left= "0";
 		menu_out = true;
 	}else{
-		temp.style.width = "1px";
-		temp.style.opacity = "0";
-		temp.style.zIndex = "-2";
+		temp.style.left= "-47.5%";
 		menu_out = false;
 	}
 }
 
 function inicio(){
 	show_menu();
-	contenedor.innerHTML = "<p>Ingresa tu nombre</p>"+
-	"<input id='nombre' type='text' placeholder='Tu nombre aquí' required/>"+
-	"<button onclick='aceptar()'>Aceptar</button>";
+	titulo.innerHTML ="MEMERAMA";
+	contenedor.innerHTML = "<div class='inst'><p>Ingresa tu nombre</p>"+
+		"<input id='nombre' type='text' placeholder='Tu nombre aquí' required/>"+
+		"<button onclick='aceptar()'>Aceptar</button></div>";
+		
 	iniciado = false;
 }
 
 function terminar(){
-	/*var name = null;
+	document.getElementById("li_terminar").style.display="none";
+	document.getElementById("li_solucion").style.display="none";
+	document.getElementById("li_ver").style.display="block";
+	document.getElementById("li_inicio").style.display="block";
 	db.transaction(function(tx){
-        tx.executeSql('SELECT * FROM USUARIO WHERE nombre = ?', [nombre], function(tx, results){
-            var name = results.rows.item(0).nombre;
-        }, null);
-    });*/
-    show_menu();
-	db.transaction(function(tx){
-        tx.executeSql("INSERT INTO USUARIO(nombre,tiempo,movimientos,abandonos) VALUES (?,?,?,?)", [nombre, contador_m+":"+contador_s, movimientos, "1"]);
+        tx.executeSql("INSERT INTO USUARIO(nombre,mins,segs,movimientos,abandonos) VALUES (?,?,?,?,?)", [nombre, contador_m,contador_s, movimientos, "1"]);
     });
-    inicio();
+	inicio();
 }
 
 function solucion(){
@@ -257,8 +254,6 @@ function solucion(){
 			}
 			carta_aux.disabled = true;
 		}
-	}else{
-		alert("No has empezado un juego");
 	}
 }
 
@@ -271,12 +266,54 @@ function ha_ganado(){
 		}
 	}
 	if(cont == size*4){
-		contenedor.innerHTML += "<div id='ganador'>¡¡¡FELICIDADES "+nombre+" TERMINASTE EL JUEGO EN UN TIMEPO DE "+
-		contador_m+":"+contador_s+" y "+movimientos+" movimientos!!!</div>";
+		document.getElementById("li_terminar").style.display="none";
+		document.getElementById("li_solucion").style.display="none";
+		document.getElementById("li_ver").style.display="block";
+		document.getElementById("li_inicio").style.display="block";
+		contenedor.innerHTML += "<div id='ganador'>¡FELICIDADES "+nombre+" TERMINASTE EL JUEGO EN UN TIEMPO DE "+
+		contador_m+":"+contador_s+"  y "+movimientos+" movimientos!</div>";
 
 		db.transaction(function(tx){
-	        tx.executeSql("INSERT INTO USUARIO(nombre,tiempo,movimientos,abandonos) VALUES (?,?,?,?)", [nombre, contador_m+":"+contador_s, movimientos, "0"]);
+	        tx.executeSql("INSERT INTO USUARIO(nombre,mins,segs,movimientos,abandonos) VALUES (?,?,?,?,?)", [nombre, contador_m,contador_s, movimientos, "0"]);
 	    });
-	    iniciado = false; //ESTO NO ESTA EN EL COMMIT v5
+	    iniciado = false;
 	}
+}
+
+function puntuaciones(){
+	show_menu();
+	var maxid=0,i;
+	db.transaction(function(tx){
+		tx.executeSql(("SELECT DISTINCT nombre FROM USUARIO"),[],
+					function(tx, results){
+							maxid=results.rows.length;
+							var nams=new Array(maxid);
+							for(i=0;i<maxid;i++){
+								nams[i]=results.rows.item(i).nombre;
+							}
+							if(maxid>0){
+								var code;
+								contenedor.innerHTML="";
+								for(i=1;i<=maxid;i++){
+									tx.executeSql(("SELECT nombre, SUM(abandonos) AS s1, SUM(mins) AS min, SUM(segs) AS seg, SUM(movimientos) AS s2 FROM USUARIO where nombre=?"),[nams[i-1]],
+												function(tx, results){
+													code="<div class='user'>";
+													code+="<h3>"+results.rows.item(0).nombre+"</h3>"+
+															"<p>Juegos abandonados: "+results.rows.item(0).s1+"</p>"+
+															"<p>Tiempo total jugado: "+getTtime(results.rows.item(0).min,results.rows.item(0).seg)+"</p>"+
+															"<p>Movimientos hechos: "+results.rows.item(0).s2+"</p>"+
+															"</div>";
+													contenedor.innerHTML+=code;
+												});
+								}
+							}else{
+								contenedor.innerHTML="<div class='inst'><p>No hay nada que mostrar</p></div>";
+							}
+					});
+	});
+}
+
+function getTtime(min, seg){
+	var div=Math.floor(seg/60);
+	return (min+div)+":"+(seg-60*div);
 }

@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content.Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
-	<title>Memerama</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="styles.css" rel="stylesheet">	
-</head>
-<body>
+	<head>
+		<title>Memerama</title>
+		<meta http-equiv="Content.Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="css/styles.css" rel="stylesheet">
+	</head>
 	
-	<header>
-		<div class="icono" onclick="show_menu()"><i class="fa fa-navicon"></i></div>
-		<div id="titulo">MEMERAMA</div>
-	</header>
-	<nav id="menu_chido" class="menu">
-		<ul>
-			<li onclick="inicio()"><i class="fa fa-home"></i>Inicio</li>
-			<li onclick="terminar()"><i class="fa fa-suitcase"></i>Terminar Juego</li>
-			<li onclick="solucion()"><i class="fa fa-puzzle-piece"></i>Solución</li>
-			<li onclick="puntuaciones()"><i class="fa fa-trophy"></i>Ver Puntuaciones</li>
-			<li onclick="alert('HOLA XD')"><i class="	fa fa-times"></i>Salir</li>
-		</ul>
-		<hr/>
-	</nav>
-	<div id="contenedor">
-		<!--EL CONTENEDOR CHIDO-->
-	</div>
-	<script src="scripts.js"></script>
-</body>
+	<body>	
+		<header>
+			<div class="icono" onclick="show_menu()"><i class="fa fa-navicon"></i></div>
+			<div id="titulo">MEMERAMA</div>
+		</header>
+		<nav id="menu_chido" class="menu">
+			<ul>
+				<li id='li_inicio' onclick="inicio()"><i class="fa fa-home"></i>Inicio</li>
+				<li id='li_terminar' style='display:none;'  onclick="terminar()"><i class="fa fa-suitcase"></i>Terminar Juego</li>
+				<li id='li_solucion' style='display:none;' onclick="solucion()"><i class="fa fa-puzzle-piece"></i>Solución</li>
+				<li id='li_ver'  onclick="puntuaciones()"><i class="fa fa-trophy"></i>Ver Puntuaciones</li>
+				<li onclick="alert('Adiós')"><i class="	fa fa-times"></i>Salir</li>
+			</ul>
+			<hr/>
+		</nav>
+		<center>
+		<div id="contenedor">
+				<div class='inst'>
+					<p>Ingresa tu nombre</p>
+					<input id='nombre' type='text' placeholder='Tu nombre aquí' required/>
+					<button onclick='aceptar()'>Aceptar</button>
+				</div>
+		</div>
+		</center>
+	</body>
+	<script src="js/scripts.js"></script>
 </html>
